@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>CatManDog - песочница креативов</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="embedded-assets.js"></script>
+  <script defer src="app.js"></script>
+  <script defer src="collection.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <img src="assets/brand/CatManDog-wordmark-black-transparent.png" alt="CatManDog" class="brand-logo">
+        <span class="topbar-divider" aria-hidden="true"></span>
+        <div class="page-name">Песочница креативов</div>
+      </div>
+      <div class="topbar-controls" aria-label="Общие настройки">
+      <div class="toolbar-group font-group">
+        <div class="segmented" id="fontButtons" role="group" aria-label="Шрифт">
+          <button type="button" data-font="Manrope" class="is-active" aria-pressed="true">Manrope</button>
+          <button type="button" data-font="Golos Text" aria-pressed="false">Golos Text</button>
+          <button type="button" data-font="Onest" aria-pressed="false">Onest</button>
+          <button type="button" data-font="Helvetica" aria-pressed="false">Helvetica</button>
+          <button type="button" data-font="Inter" aria-pressed="false">Inter</button>
+        </div>
+      </div>
+      <div class="toolbar-group format-group">
+        <span class="toolbar-label">Формат:</span>
+        <div class="segmented" id="formatButtons" role="group" aria-label="Формат">
+          <button type="button" data-format="portrait" class="is-active" aria-pressed="true">4:5</button>
+          <button type="button" data-format="square" aria-pressed="false">1:1</button>
+        </div>
+      </div>
+      </div>
+      <span class="save-status" id="saveStatus" role="status">Готово к работе</span>
+      <button type="button" class="collection-toggle" id="collectionToggle" aria-pressed="false">Коллекция креативов</button>
+    </header>
+
+    <div class="work-area" id="sandboxView">
+      <main class="gallery-area">
+        <h1 class="visually-hidden">Шесть направлений креативов CatManDog</h1>
+        <div class="gallery" id="gallery" aria-label="Варианты креативов"></div>
+        <p class="gallery-note">Макеты показывают направления оформления. Изображения товаров и животных используются только для визуального сравнения</p>
+      </main>
+
+      <aside class="inspector" aria-label="Настройки выбранного креатива">
+        <div class="inspector-tabs" role="tablist" aria-label="Панель песочницы">
+          <button type="button" role="tab" aria-selected="true" class="is-active" data-panel="settings">Настройки</button>
+          <button type="button" role="tab" aria-selected="false" data-panel="library">Библиотека</button>
+        </div>
+        <div id="settingsPanel" role="tabpanel">
+        <div class="inspector-head">
+          <span class="inspector-kicker">Текущий креатив</span>
+          <span class="selected-number" id="selectedNumber">01</span>
+          <h2 id="selectedName">Тишина</h2>
+          <p id="selectedDescription">Редакционный хук</p>
+        </div>
+
+        <div class="inspector-section">
+          <label class="field-label" for="titleInput">Заголовок</label>
+          <textarea id="titleInput" rows="3" spellcheck="true"></textarea>
+          <label class="field-label" for="subInput">Подпись</label>
+          <textarea id="subInput" rows="3" spellcheck="true"></textarea>
+        </div>
+
+        <div class="inspector-section color-section">
+          <div class="section-label">Цвета CatManDog</div>
+          <div class="color-row" aria-label="Цвета бренда">
+            <div><span style="background:#20221E"></span><b>Ink</b><small>#20221E</small></div>
+            <div><span style="background:#FFFFFF"></span><b>White</b><small>#FFFFFF</small></div>
+            <div><span style="background:#D8F36A"></span><b>Lime</b><small>#D8F36A</small></div>
+            <div><span style="background:#F3F3F0"></span><b>Surface</b><small>#F3F3F0</small></div>
+            <div><span style="background:#75766F"></span><b>Muted</b><small>#75766F</small></div>
+          </div>
+        </div>
+
+        <div class="inspector-section palette-section">
+          <div class="section-label">Раскладка цветов</div>
+          <div class="palette-options" id="paletteButtons" role="group" aria-label="Раскладка цветов">
+            <button type="button" data-palette="base" class="palette-button is-active" aria-pressed="true"><span class="palette-preview preview-base"></span>Авторская</button>
+            <button type="button" data-palette="light" class="palette-button" aria-pressed="false"><span class="palette-preview preview-light"></span>Светлая</button>
+            <button type="button" data-palette="lime" class="palette-button" aria-pressed="false"><span class="palette-preview preview-lime"></span>Лайм</button>
+            <button type="button" data-palette="dark" class="palette-button" aria-pressed="false"><span class="palette-preview preview-dark"></span>Тёмная</button>
+          </div>
+        </div>
+
+        <div class="inspector-section toggle-section">
+          <label class="toggle-row" for="artToggle">
+            <span><strong>Графика или изображение</strong><small>Показать главный визуальный элемент</small></span>
+            <input type="checkbox" id="artToggle" checked><span class="switch" aria-hidden="true"></span>
+          </label>
+          <label class="toggle-row" for="logoToggle">
+            <span><strong>Логотип на креативе</strong><small>Оригинальный знак CatManDog</small></span>
+            <input type="checkbox" id="logoToggle"><span class="switch" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <div class="inspector-section image-section">
+          <label class="field-label" for="imageInput">Изображение</label>
+          <div class="image-control">
+            <img id="imagePreview" alt="Изображение выбранного макета">
+            <div class="image-control-actions">
+              <label class="upload-button" for="imageInput"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0 4 4m-4-4L8 8M4 17v3h16v-3"/></svg>Заменить</label>
+              <button type="button" class="text-button" id="clearImageButton">Убрать</button>
+            </div>
+          </div>
+          <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+        </div>
+
+        <div class="inspector-section sidebar-format">
+          <div class="section-label">Формат</div>
+          <div class="segmented" role="group" aria-label="Формат выбранного макета">
+            <button type="button" data-format="portrait" class="is-active" aria-pressed="true">4:5</button>
+            <button type="button" data-format="square" aria-pressed="false">1:1</button>
+          </div>
+        </div>
+
+        <div class="inspector-actions">
+          <button type="button" id="downloadButton" class="primary-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>Скачать PNG</button>
+          <button type="button" id="resetButton" class="secondary-button">Сбросить этот вариант</button>
+          <p>PNG выгружается в размере 1080 × 1350 или 1080 × 1080. Текст и настройки сохраняются в этом браузере</p>
+        </div>
+        </div>
+        <div id="libraryPanel" role="tabpanel" hidden>
+          <div class="library-intro">Изображения для макетов</div>
+          <div class="library-grid" id="libraryGrid"></div>
+          <p class="library-note">Выбор заменит изображение в активном креативе. Для оригинального изображения нажми «Вернуть изображение макета»</p>
+        </div>
+      </aside>
+    </div>
+    <main class="collection-view" id="collectionView" hidden>
+      <div class="collection-heading">
+        <div>
+          <p class="collection-eyebrow">CatManDog / Social</p>
+          <h1>Коллекция креативов</h1>
+          <p class="collection-summary">Шесть готовых макетов для Instagram в формате 1080 × 1350</p>
+        </div>
+        <a class="collection-download-all" href="collection/catmandog-six-creatives.zip" download>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>
+          Скачать все ZIP
+        </a>
+      </div>
+      <div class="collection-grid">
+        <article class="collection-card"><img src="collection/01-cat-questions.png" alt="Почему кошки так делают - кот и реплика с символами" loading="lazy"><div class="collection-card-footer"><div><span>01 / Поведение кошек</span><h2>Почему кошки так делают</h2></div><a href="collection/01-cat-questions.png" download="CatManDog-01-cat-questions.png" aria-label="Скачать креатив 01 в PNG"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>PNG</a></div></article>
+        <article class="collection-card"><img src="collection/02-food-comparison.png" alt="Сравнение готового корма и натурального питания - две цветные миски" loading="lazy"><div class="collection-card-footer"><div><span>02 / Корм</span><h2>Готовый корм и натуральное питание</h2></div><a href="collection/02-food-comparison.png" download="CatManDog-02-food-comparison.png" aria-label="Скачать креатив 02 в PNG"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>PNG</a></div></article>
+        <article class="collection-card"><img src="collection/03-play.png" alt="Игры делают жизнь ярче - играющий кот на лаймовом фоне" loading="lazy"><div class="collection-card-footer"><div><span>03 / Игры и активность</span><h2>Игры делают жизнь ярче</h2></div><a href="collection/03-play.png" download="CatManDog-03-play.png" aria-label="Скачать креатив 03 в PNG"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>PNG</a></div></article>
+        <article class="collection-card"><img src="collection/04-health.png" alt="Здоровье начинается с внимания - кот и рука на светлом фоне" loading="lazy"><div class="collection-card-footer"><div><span>04 / Здоровье кошек</span><h2>Здоровье начинается с внимания</h2></div><a href="collection/04-health.png" download="CatManDog-04-health.png" aria-label="Скачать креатив 04 в PNG"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>PNG</a></div></article>
+        <article class="collection-card"><img src="collection/05-toys.png" alt="Больше поводов для игр - кошачьи игрушки на светлом фоне" loading="lazy"><div class="collection-card-footer"><div><span>05 / Игрушки</span><h2>Больше поводов для игр</h2></div><a href="collection/05-toys.png" download="CatManDog-05-toys.png" aria-label="Скачать креатив 05 в PNG"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>PNG</a></div></article>
+        <article class="collection-card"><img src="collection/06-welcome.png" alt="Добро пожаловать в CatManDog - крупная цифра 10 и кот" loading="lazy"><div class="collection-card-footer"><div><span>06 / Приветственное предложение</span><h2>Добро пожаловать в CatManDog</h2></div><a href="collection/06-welcome.png" download="CatManDog-06-welcome.png" aria-label="Скачать креатив 06 в PNG"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>PNG</a></div></article>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
